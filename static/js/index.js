@@ -76,3 +76,25 @@ $(document).ready(function() {
     bulmaSlider.attach();
 
 })
+
+// Modal functionality
+$(document).ready(function() {
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImage");
+  var span = document.getElementsByClassName("close")[0];
+
+  $(".results-carousel .item img").click(function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+  });
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+});
