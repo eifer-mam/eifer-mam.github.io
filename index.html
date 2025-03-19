@@ -124,6 +124,15 @@
                     <span>Supplementary Material</span>
                   </a>
                 </span>
+                <span class="link-block">
+                  <a href="./static/files/EIFER_supp.zip" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-file-archive"></i>
+                    </span>
+                    <span>Get Updates</span>
+                  </a>
+                </span>
+                <br>
                 <!-- Code Link. -->
                 <span class="link-block">
                   <a href="" class="external-link button is-normal is-rounded is-dark">
@@ -174,12 +183,11 @@
         <div class="column has-text-centered">
           <div class="content">
             <div class="publication-video">
-              <iframe title="Teaser Video" src="./static/videos/TeaserWebsiteC.mp4" frameborder="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen width="800"></iframe>
+              <iframe title="Teaser Video" src="./static/videos/TeaserWebsiteC.mp4" frameborder="0" frameborder="0" allow="autoplay; encrypted-media; muted" allowfullscreen width="800"></iframe>
             </div>
-            <!-- <img src="./static/images/teaser.webp" class="interpolation-image" alt="Rivers in East-Germany" width="auto" /> -->
             <p style="font-size: 0.95rem;" class="is-centered">
               <strong>Bridging the gap between mimics and muscles:</strong>
-              Our method <strong>EIFER</strong> utilizes neural unpaired image-to-image translation to decouple facial geometry and appearance for muscle-activity-based expression synthesis and electrode-free facial electromyography.
+              Our method <strong style="color: blue;">EIFER</strong> utilizes neural unpaired image-to-image translation to decouple facial geometry and appearance for muscle-activity-based expression synthesis and electrode-free facial electromyography.
             </p>
           </div>
         </div>
@@ -212,15 +220,17 @@
   <section class="hero is-light is-small">
     <div class="hero-body">
       <div class="container">
-        <h2 class="title is-3">Insights</h2>
+        <h2 class="title is-3">Main Insights</h2>
         <div id="results-carousel" class="carousel results-carousel">
           <div class="item">
             <img src="./static/images/eifer_qualitative.jpg" alt="Geometry Reconstruction Experiments" />
             <div class="caption">
               <strong>Facial Geometry Reconstruction</strong>
               <br>
-              Our method faithfully reconstructs the facial geometry under strong sEMG electrode occlusion.
+              Our method <strong>EIFER</strong> faithfully reconstructs the facial geometry under strong sEMG electrode occlusion.
               It correctly captures the expression, identity, and pose of the subject.
+              Existing methods struggle to align the face due to already misaligned landmark placements.
+              Further, the identity parameters diverge even with the same person, making them unsuitable for our task.
             </div>
           </div>
           <div class="item">
@@ -252,7 +262,7 @@
               In the second phase of <strong>EIFER</strong> we learn to synthesize facial expressions based on muscle activity.
               This allows to generate expression based solely on muscle activity and provides a new way to analyze facial expressions, especially interesting for possible advances in camera-free animation captures.
               While <strong>EIFER</strong> creates the most realistic results, we will also publish EMG2Exp of <strong>MC-CycleGAN+Model</strong> combinations.
-              Therefore, both the expression space of both <strong>FLAME</strong> and <strong>BFM</strong> are not connected to the muscle activity.
+              Therefore, both the expression space of both <strong>FLAME</strong> and <strong>BFM</strong> are now connected to the muscle activity.
             </div>
           </div>
           <div class="item">
@@ -291,42 +301,137 @@
     </div>
   </section>
 
-
-  <!-- <section class="section">
+  <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="columns is-centered">
           <div class="column is-full-width">
-            <h2 class="title is-3">Related Links</h2>
+            <h2 class="title is-3">Method</h2>
+            <div class="content has-text-justified">
+              <img src="./static/images/eifer_method.jpg" alt="EIFER Method" class="interpolation-image" width="auto" />
+              <p style="line-height: 1.6;">
+                <b>EIFER (Electromyography-Informed Facial Expression Reconstruction)</b> introduces a novel approach for facial expression analysis that addresses the challenges posed by surface electromyography (sEMG) electrode occlusion.
+                Our method is grounded in the principle of decoupling facial geometry and appearance, achieved through a neural unpaired image-to-image translation framework, see the above figure.
+                EIFER leverages <b>3D Morphable Models (3DMMs)</b>, specifically <b>FLAME</b> , to provide a parametric representation of facial shape and expression.
+                <u>We see the 3DMM expression space and muscle activity as the missing link between computer animation and physiologically-grounded facial expression analysis.</u>
+              </p>
+              <p style="line-height: 1.6;">
+                For monocular 3D face reconstruction, EIFER employs <b>neural differential rendering</b> and utilizes pre-trained <b>SMIRK</b> encoder networks.
+                These encoders, consisting of sub-encoders based on MobileNetV3 backbones, estimate 3DMM parameters (shape, expression, pose) from the sEMG electrode occluded input facial images.
+                The core of EIFER's occlusion handling lies in a <b>CycleGAN-like adversarial architecture</b> for unpaired image-to-image translation.
+                This architecture comprises generator and discriminator networks trained adversarially using unpaired sets of sEMG-occluded and occlusion-free (reference) facial images.
+                Crucially, EIFER learns a <b>bidirectional mapping</b> between the 3DMM expression parameter space and measured sEMG muscle activity through multi-layer perceptron (MLPs).
+                This bidirectional mapping enables both the synthesis of facial expressions from muscle activity and the prediction of muscle activity from observed facial expressions, effectively achieving electrode-free facial electromyography.
+              </p>
+              <h4 class="title">Key Advantages of EIFER:</h4>
+              <ul>
+                <li>
+                  <b>Reconstructs Facial Expressions Under Occlusion:</b>
+                  EIFER uniquely addresses the challenge of sensor occlusion, accurately reconstructing facial expressions even when electrodes or other visual obstructions are present.
+                </li>
+                <li>
+                  <b>Combines Video and Muscle Activity Data:</b>
+                  By leveraging both video and muscle activity (sEMG) data, EIFER provides a more comprehensive and physiologically grounded fully data-driven understanding of facial expressions.
+                </li>
+                <li>
+                  <b>Enables Electrode-Free Facial Electromyography:</b>
+                  EIFER can predict muscle activity from facial expressions alone, paving the way for non-invasive, electrode-free facial electromyography in the future.
+                </li>
+                <li>
+                  <b>Provides Accurate 3D Facial Geometry and Appearance:</b>
+                  EIFER not only reconstructs a visually realistic face but also captures the underlying 3D geometry, providing richer data for analysis and synthesis.
+                </li>
+                <li>
+                  <b>Utilizes Advanced AI Techniques:</b>
+                  Built upon state-of-the-art 3D Morphable Models and unpaired image-to-image translation, EIFER represents a significant advancement in facial analysis technology.
+                </li>
+                <li>
+                  <b>Opens Doors for Multi-Modal Facial Analysis:</b>
+                  EIFER facilitates the integration of various data streams for a more holistic understanding of facial expressions, with potential applications in medicine, psychology, human-computer interaction, and animation.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-4">Related Links</h2>
             <div class="content has-text-justified">
               <p>
-                There's a lot of excellent work that was introduced around the same time as ours.
+                EIFER combines many ideas from recent works in computer vision, graphics, and machine learning. Here are some related works that you might find interesting:
+              </p>
+              <ul>
+                <li>
+                  <b><a href="https://flame.is.tue.mpg.de/">FLAME</a></b> introduced a 3D Morphable Model that captures facial shape and expression variations.
+                </li>
+                <li>
+                  <b><a href="https://georgeretsi.github.io/smirk/">SMIRK</a></b> replaced the traditional appearance model with a neural renderer and decoupled the facial encoding into three sub-encoders.
+                </li>
+                <li>
+                  <b><a href="https://junyanz.github.io/CycleGAN/">CycleGAN</a></b> and <b><a href="https://dx.doi.org/10.1007/978-3-031-45382-3_22">MC-CycleGAN</a></b> are unpaired image-to-image translation methods that have inspired our adversarial training.
+                </li>
+                <li>
+                  <b><a href="https://deca.is.tue.mpg.de/">DECA</a></b>, <b><a href="https://emoca.is.tue.mpg.de/">EMOCAv2</a></b>, <b><a href="https://georgeretsi.github.io/smirk/">SMIRK</a></b>, <b><a href="https://github.com/sicxu/Deep3DFaceRecon_pytorch">Deep3DFace</a></b>, and <b><a href="https://github.com/unibas-gravis/Occlusion-Robust-MoFA">FOCUS</a></b> are all state-of-the-art methods for monocular 3D face reconstruction and analysis. We provide <b>Exp2EMG</b> and <b>EMG2Exp</b> models
+                  for these methods.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-4">Acknowledgments</h2>
+            <div class="content has-text-justified">
+              <p>
+                This publication is a joint effort of the <a href="https://inf-cv.uni-jena.de/">Computer Vision Group at Friedrich Schiller University Jena</a>and the <a href="https://www.uniklinikum-jena.de/hno/Klinik+f%C3%BCr+Hals__+Nasen_+und+Ohrenheilkunde-page--p-1.html">Department of Otorhinolaryngology, Head and Neck Surgery at Jena University Hospital</a>.
+                The project <a href="https://gepris.dfg.de/gepris/projekt/427899908"><b>Bridging the gap: Mimics and Muscles</b></a> was funded by the <b><a href="https://www.dfg.de/">German Science Foundation</a></b> under the grant number <a href="https://gepris.dfg.de/gepris/projekt/427899908"><b>DFG DE-735/15-1</b> and <b>DFG GU-463/12-1</b></a>.
+                We would like to thank all participants who volunteered for the data collection and the reviewers for their valuable feedback.
               </p>
               <p>
-                <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an
-                idea similar to our windowed position encoding for coarse-to-fine optimization.
-              </p>
-              <p>
-                <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-                both use deformation fields to model non-rigid scenes.
-              </p>
-              <p>
-                Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-              </p>
-              <p>
-                There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+                We thank
+                <a href="https://scholar.google.com/citations?user=s9bfMqEAAAAJ">Niklas Penzel</a>,
+                <a href="https://scholar.google.com/citations?user=Y4bL1asAAAAJ">Gideon Stein</a>,
+                <a href="https://scholar.google.com/citations?user=hoNWqu4AAAAJ">Sai Vemuri</a>,
+                <a href="https://scholar.google.com/citations?user=ZWPqDxEAAAAJ">Sven Sickert</a>, and
+                <a href="https://scholar.google.com/citations?user=ElQ7URQAAAAJ">Maha Shadaydeh</a>
+                for their manuscript feedback and advice throughout the project.
+                Additionally, we would like to thank
+                Nadiya Müller,
+                Vanessa Tretzsch,
+                Martin Heinrich,
+                Anna-Maria Kuttenreich,
+                <a href="https://scholar.google.com/citations?user=-gcoOtwAAAAJ">Christian Dobel</a>,
+                <a href="https://scholar.google.com/citations?user=qSZrJ84AAAAJ">Gerd Fabian Volk</a>,
+                Roland Graßme,
+                <a href="https://scholar.google.com/citations?user=j-_oDsUAAAAJ">Paul Funk</a>, and
+                Richard Schneider
+                for their support.
+                Furthermore, we thank <a href="https://eggerbernhard.ch/">Bernhard Egger</a> highlighting the potential of our data for facial expression synthesis.
               </p>
             </div>
           </div>
         </div>
       </div>
-  </section>-->
+  </section>
+
 
   <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
+    <div class="container is-max-desktop content is-centered has-text-justified">
       <h2 class="title">BibTeX (arXiv Preprint)</h2>
       <span>
-        If you find our work useful, work with our models, utilize our data set for your research, or use our code, please cite our work:
+        If you find our work useful, utilize with our models, start your own research with our data set, or use our parts of our code, please cite our work:
       </span>
       <pre><code>@article{buchner2025electromyography,
       title={Electromyography-Informed Facial Expression Reconstruction for Physiological-Based Synthesis and Analysis},
