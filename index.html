@@ -50,6 +50,12 @@
             <a class="navbar-item" href="https://inf-cv.uni-jena.de">
               Computer Vision Group Homepage
             </a>
+            <a class="navbar-item" href="https://www.uniklinikum-jena.de/hno/Klinik+f%C3%BCr+Hals__+Nasen_+und+Ohrenheilkunde-page--p-1.html">
+              ENT Department - Jena University Hospital
+            </a>
+            <a class="navbar-item" href="https://www.uni-jena.de/en">
+              Friedrich Schiller University Jena
+            </a>
           </div>
         </div>
       </div>
@@ -62,9 +68,11 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
+
             <h1 class="title is-2 publication-title">
               <u>EIFER</u><br> Electromyography-Informed Facial Expression Reconstruction For Physiological-Based Synthesis and Analysis
             </h1>
+
             <div class="is-size-5 publication-authors">
               <span class="author-block">
                 <a href="https://timozen.github.io">Tim Büchner</a><sup>1</sup>,</span>
@@ -101,11 +109,19 @@
                   </a>
                 </span> -->
                 <span class="link-block">
-                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://arxiv.org/abs/2503.09556" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="ai ai-arxiv"></i>
                     </span>
-                    <span>arXiv</span>
+                    <span>arXiv Preprint</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="./static/files/EIFER_supp.zip" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-file-archive"></i>
+                    </span>
+                    <span>Supplementary Material</span>
                   </a>
                 </span>
                 <!-- Code Link. -->
@@ -157,7 +173,10 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <div class="content">
-            <img src="./static/images/teaser.webp" class="interpolation-image" alt="Rivers in East-Germany" width="auto" />
+            <div class="publication-video">
+              <iframe title="Teaser Video" src="./static/videos/TeaserWebsiteC.mp4" frameborder="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen width="800"></iframe>
+            </div>
+            <!-- <img src="./static/images/teaser.webp" class="interpolation-image" alt="Rivers in East-Germany" width="auto" /> -->
             <p style="font-size: 0.95rem;" class="is-centered">
               <strong>Bridging the gap between mimics and muscles:</strong>
               Our method <strong>EIFER</strong> utilizes neural unpaired image-to-image translation to decouple facial geometry and appearance for muscle-activity-based expression synthesis and electrode-free facial electromyography.
@@ -167,55 +186,6 @@
       </div>
     </div>
   </section>
-
-  <!-- <section class="hero is-light is-small">
-    <div class="hero-body">
-      <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item item-steve">
-            <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/steve.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-chair-tp">
-            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/chair-tp.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-shiba">
-            <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/shiba.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-fullbody">
-            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/fullbody.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-blueshirt">
-            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/blueshirt.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-mask">
-            <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/mask.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-coffee">
-            <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/coffee.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-toby">
-            <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/toby2.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
   <section class="section">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
@@ -236,18 +206,88 @@
           </div>
         </div>
       </div>
-      <!--/ Abstract. -->
+    </div>
+  </section>
 
-      <!-- Paper video. -->
-      <!-- <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Video</h2>
-          <div class="publication-video">
-            <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3">Insights</h2>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <img src="./static/images/eifer_qualitative.jpg" alt="Geometry Reconstruction Experiments" />
+            <div class="caption">
+              <strong>Facial Geometry Reconstruction</strong>
+              <br>
+              Our method faithfully reconstructs the facial geometry under strong sEMG electrode occlusion.
+              It correctly captures the expression, identity, and pose of the subject.
+            </div>
           </div>
+          <div class="item">
+            <img src="./static/images/eifer_qualitative_recon.jpg" alt="Appearance Reconstruction Experiments" />
+            <div class="caption">
+              <strong>Facial Appearance Reconstruction</strong>
+              <br>
+              Our method separates the facial appearance from the geometry, allowing for faithful reconstruction of the skin texture, lighting, and occluded electrodes.
+              While existing methods inherently restore the occluded regions due to the utilized appearance model, our method creates more photorealistic results due to the adversarial cyclic training.
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/eifer_exp2emg.jpg" alt="Electrode-Free Facial EMG" />
+            <div class="caption">
+              <strong>Electrode-Free Facial EMG</strong>
+              <br>
+              Our method allows for the prediction of muscle activity based on observed facial expressions, this is a new paradigm for <strong>electrode-free facial electromyography</strong>.
+              This enables the reconstruction of muscle activity without the need for electrodes, providing a new way to analyze facial expressions.
+              We demonstrate that our method can predict muscle activity from observed expressions and synthesize expressions based on muscle activity.
+              We provide next to <strong>EIFER</strong> several <strong>Exp2EMG</strong> models for existing extractors like <strong>DECA</strong>, <strong>EMOCAv2</strong>, <strong>SMIRK</strong>,<strong>Deep3DFace</strong>, and <strong>FOCUS</strong>.
+              Hence, both <strong>FLAME</strong> and <strong>BFM</strong> expression spaces are connected to the muscle activity.
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/eifer_emg2exp.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>Expression Synthesis</strong>
+              <br>
+              In the second phase of <strong>EIFER</strong> we learn to synthesize facial expressions based on muscle activity.
+              This allows to generate expression based solely on muscle activity and provides a new way to analyze facial expressions, especially interesting for possible advances in camera-free animation captures.
+              While <strong>EIFER</strong> creates the most realistic results, we will also publish EMG2Exp of <strong>MC-CycleGAN+Model</strong> combinations.
+              Therefore, both the expression space of both <strong>FLAME</strong> and <strong>BFM</strong> are not connected to the muscle activity.
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/01_face-at-rest_Geo.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>More Geometry Examples - Fact At Rest</strong>
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/02_eye-tight_Geo.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>More Geometry Examples - Eyes closed tightly</strong>
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/03_smile-open_Geo.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>More Geometry Examples - Smile Open</strong>
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/04_snarl_Geo.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>More Geometry Examples - Snarl</strong>
+            </div>
+          </div>
+          <div class="item">
+            <img src="./static/images/05_nose_Geo.jpg" alt="Expression Synthesis" />
+            <div class="caption">
+              <strong>More Geometry Examples - Nose wrinkling</strong>
+            </div>
+          </div>
+
         </div>
-      </div> -->
-      <!--/ Paper video. -->
+      </div>
     </div>
   </section>
 
@@ -280,23 +320,28 @@
           </div>
         </div>
       </div>
-  </section>
+  </section>-->
+
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
-}</code></pre>
+      <h2 class="title">BibTeX (arXiv Preprint)</h2>
+      <span>
+        If you find our work useful, work with our models, utilize our data set for your research, or use our code, please cite our work:
+      </span>
+      <pre><code>@article{buchner2025electromyography,
+      title={Electromyography-Informed Facial Expression Reconstruction for Physiological-Based Synthesis and Analysis},
+      author={B{\"u}chner, Tim and Anders, Christoph and Guntinas-Lichius, Orlando and Denzler, Joachim},
+      journal={arXiv preprint arXiv:2503.09556},
+      year={2025}
+}
+</code></pre>
     </div>
-  </section> -->
+  </section>
 
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
-        <a class="icon-link" href="#">
+        <a class="icon-link" href="./static/files/EIFER.pdf">
           <i class="fas fa-file-pdf"></i>
         </a>
         <a class="icon-link" href="https://timozen.github.io" class="external-link" disabled>
