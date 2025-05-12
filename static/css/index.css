@@ -276,3 +276,20 @@ body {
     font-size: 2.5rem;
   }
 }
+
+@media (max-width: 450px) {
+  .title.is-2 {
+    font-size: 2.0rem;
+  }
+  .publication-video iframe {
+    width: 380px;
+    /* height: 350px; */
+    object-fit: contain;
+    /* transform: scale(0.); */
+    position: absolute;
+    top: -90px;
+    left: 0;
+    /* width: 1000px; */
+    /* height: 300px; */
+  }
+}
