@@ -1,187 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dataset - Mimics, Muscles, and Me | EIFER</title>
-    <link rel="stylesheet" href="./static/css/bulma.min.css">
-    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="./static/css/index.css">
-    <link rel="icon" href="./static/images/eifer.png" type="image/x-icon">
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mimics, Muscles, and Me (MMM) — Dataset</title>
+<meta name="description" content="Paired facial surface EMG and frontal video of one participant performing facial movements and emotional expressions — frame-aligned, electrode-removed, with 3DMM fits from 7 methods.">
+<link rel="icon" href="./static/images/eifer.png" type="image/x-icon">
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --teal:#0d9488; --teal-d:#0f766e; --indigo:#4f46e5; --dark:#0f172a; --code:#0b1220;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px}
+  a{color:var(--teal-d);text-decoration:none}
+  a:hover{text-decoration:underline}
+  img{max-width:100%;display:block}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
 
+  /* nav */
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:54px}
+  nav .brand{font-weight:700;color:var(--dark);letter-spacing:-.2px}
+  nav .links{display:flex;gap:16px;margin-left:auto;font-size:14px}
+  nav a{color:var(--muted)}
+  nav a:hover{color:var(--teal-d);text-decoration:none}
+  @media(max-width:640px){nav .links{display:none}}
+
+  /* hero */
+  .hero{background:radial-gradient(1200px 400px at 70% -10%,#134e4a 0%,transparent 60%),
+    linear-gradient(135deg,#0f172a,#0b1220);color:#e5e7eb;padding:64px 0 56px}
+  .hero h1{margin:0 0 6px;font-size:clamp(28px,5vw,46px);letter-spacing:-.5px;color:#fff;line-height:1.1}
+  .hero .tag{font-size:clamp(15px,2.2vw,20px);color:#a7f3d0;max-width:680px}
+  .hero p.lede{color:#cbd5e1;max-width:680px;margin:14px 0 0}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    padding:8px 14px;border-radius:999px;font-size:13px;color:#e2e8f0}
+  .chip b{color:#fff}
+  .hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-d);text-decoration:none}
+  .btn-ghost{background:transparent;color:#e2e8f0;border:1px solid rgba(255,255,255,.25)}
+
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.5vw,30px);margin:0 0 8px;letter-spacing:-.3px;color:var(--dark)}
+  h2 .n{color:var(--teal);font-variant-numeric:tabular-nums}
+  .sec-lede{color:var(--muted);max-width:720px;margin:0 0 26px}
+
+  /* pipeline cards */
+  .pipe{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;position:relative}
+  .pcard .step{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:1px}
+  .pcard h3{margin:8px 0 6px;font-size:17px}
+  .pcard p{margin:0;color:var(--muted);font-size:14px}
+  .pcard::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+    color:var(--line);font-size:22px;font-weight:700;z-index:2}
+  .pcard:last-child::after{display:none}
+  @media(max-width:760px){.pipe{grid-template-columns:1fr}.pcard::after{display:none}}
+
+  /* generic figure */
+  figure{margin:0 0 28px}
+  figure img{border-radius:10px;border:1px solid var(--line)}
+  figcaption{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+
+  /* alignment figure */
+  .align{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;justify-content:center}
+  .align .f{flex:0 0 auto;text-align:center}
+  .align .f img{border-radius:10px;border:1px solid var(--line)}
+  .align .f small{color:var(--muted);font-size:12px;display:block;margin-top:6px}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:680px;margin:0 auto}
+  .compare .c{text-align:center}
+  .compare .c img{border-radius:10px;border:1px solid var(--line)}
+  .compare .c small{color:var(--muted);font-size:12px;display:block;margin-top:6px}
+
+  /* galleries */
+  .gallery{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .gallery figure{margin:0}
+
+  /* stat table */
+  table.tbl{width:100%;border-collapse:collapse;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px}
+  table.tbl th,table.tbl td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  table.tbl thead th{background:#f1f5f9;color:var(--dark);font-size:13px}
+  table.tbl tbody tr:last-child td{border-bottom:none}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+  /* methods */
+  .methods{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .meth{background:#ecfdf5;border:1px solid #a7f3d0;color:#0f766e;border-radius:6px;
+    padding:5px 11px;font-size:13px;font-weight:600}
+
+  /* code */
+  pre{background:var(--code);color:#e2e8f0;padding:18px 20px;border-radius:10px;overflow:auto;
+    font-size:13.5px;line-height:1.55}
+  pre .c{color:#64748b}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace}
+
+  /* details citation */
+  details.cite{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:0 18px;margin-bottom:12px}
+  details.cite summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--dark)}
+  details.cite summary small{color:var(--muted);font-weight:400;margin-left:8px}
+  details.cite pre{margin:0 0 16px;border-radius:8px}
+
+  .note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:14px 18px;
+    border-radius:10px;font-size:14px;margin:20px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+  footer{background:var(--dark);color:#94a3b8;padding:36px 0;font-size:14px;margin-top:0}
+  footer a{color:#5eead4}
+</style>
+</head>
 <body>
 
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html" style="color:var(--dark);text-decoration:none">MMM</a>
+    <div class="links">
+      <a href="index.html">← EIFER Home</a>
+      <a href="#what">Overview</a>
+      <a href="#align">Alignment</a>
+      <a href="#paradigms">Tasks</a>
+      <a href="#structure">Structure</a>
+      <a href="#start">Quick&nbsp;start</a>
+      <a href="#cite">Cite</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Mimics, Muscles, and Me</h1>
+    <div class="tag">Paired facial sEMG and frontal video — frame-aligned, electrode-removed, with 3DMM fits.</div>
+    <p class="lede">One participant performed standardized facial movements and emotional expressions
+      while surface electromyography and a frontal camera recorded together. Every clip is cut to one
+      task, and the sEMG is resampled to the video frame rate, so signal and image line up by row index.</p>
+    <div class="chips">
+      <span class="chip"><b>1</b> participant</span>
+      <span class="chip"><b>4</b> sessions</span>
+      <span class="chip"><b>95</b> clips</span>
+      <span class="chip"><b>46</b> with sEMG</span>
+      <span class="chip"><b>7</b> 3DMM methods</span>
+      <span class="chip"><b>~360&nbsp;MB</b></span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://drive.google.com/file/d/193KEYNU6uSJhj_75_gMmJRKrmMyZA6P8/view?usp=sharing">⬇ Download MMM (~360&nbsp;MB)</a>
+      <a class="btn btn-ghost" href="#start">Quick start</a>
+      <a class="btn btn-ghost" href="./static/files/MMM_DATASET_README.md">Full reference ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <h2><span class="n">01</span> &nbsp;What is happening here?</h2>
+    <p class="sec-lede">One person sat in front of a camera and did two kinds of things, twice each —
+      once with sEMG electrodes on the face, once without. The electrode array measures muscle activity
+      but corrupts the face for any image-based method, so the pipeline does three jobs on top of the raw recording:</p>
+    <div class="pipe">
+      <div class="pcard">
+        <div class="step">STEP 1 · RECORD</div>
+        <h3>sEMG + frontal video</h3>
+        <p>11 facial muscles × 2 sides at 4096 Hz, and a 286×286 / 30 fps camera, running on independent clocks.</p>
+      </div>
+      <div class="pcard">
+        <div class="step">STEP 2 · ALIGN &amp; CUT</div>
+        <h3>Frame-align the modalities</h3>
+        <p>Consensus cross-correlation of sEMG envelopes vs. video blendshapes finds the lag; clips are cut so sEMG row <em>i</em> = video frame <em>i</em>.</p>
+      </div>
+      <div class="pcard">
+        <div class="step">STEP 3 · CLEAN &amp; FIT</div>
+        <h3>Remove electrodes → 3DMM</h3>
+        <p>MC-CycleGAN synthesizes electrode-free video; seven monocular 3D face reconstructors are fitted to it.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:34px">
+      <div class="compare">
+        <div class="c">
+          <img src="./static/images/mmm/elec_happy.png" alt="with electrodes" style="aspect-ratio:1;object-fit:cover">
+          <small>With sEMG electrodes — raw frontal video</small>
         </div>
-        <div class="navbar-menu">
-            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-                <a class="navbar-item" href="index.html">
-                    <span class="icon">
-                        <img src="./static/images/eifer.png" alt="EIFER" style="height: 2rem;">
-                    </span>
-                    <span>EIFER Home</span>
-                </a>
-            </div>
+        <div class="c">
+          <img src="./static/images/mmm/frame_happy.png" alt="electrodes removed" style="aspect-ratio:1;object-fit:cover">
+          <small>Electrodes removed — MC-CycleGAN</small>
         </div>
-    </nav>
+      </div>
+      <figcaption>The same frame before and after electrode removal. The clean video is what every 3D face reconstruction is fitted to.</figcaption>
+    </div>
+  </div>
+</section>
 
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title">Dataset - Mimics, Muscles, and Me</h1>
-                <h2 class="subtitle">Download and License Information</h2>
-            </div>
-        </div>
-    </section>
+<section id="align">
+  <div class="wrap">
+    <h2><span class="n">02</span> &nbsp;Two modalities, perfectly aligned</h2>
+    <p class="sec-lede">There was no hardware trigger LED, so alignment is statistical. After the cut, the
+      sEMG envelope (22 channels, 11 muscles × L/R) shares one time axis with the video — the dashed
+      marker in the heatmap below is the exact frame shown beside it.</p>
 
+    <div class="align">
+      <div class="f">
+        <img src="./static/images/mmm/frame_happy.png" alt="happy video frame" width="240">
+        <small>video frame 105<br><code>99_2S_emotion_12_happy</code></small>
+      </div>
+      <div class="f">
+        <img src="./static/images/mmm/emg_heatmap.svg" alt="22-channel sEMG heatmap" width="520">
+        <small>22-channel sEMG envelope · the marker = that frame</small>
+      </div>
+    </div>
 
-    <section class="section">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered">
-                <div class="column is-full-width">
-                    <div class="content has-text-justified">
-                        <h2 class="title is-4">Dataset Download</h2>
-                        <p>
-                            By downloading you agree to license terms listed below.
-                            Download the data set <strong>Mimics, Muscles, and Me</strong> here:
-                            <br>
-                            <a class="button is-link is-light" href="https://zenodo.org/" download>
-                                <span class="icon"><i class="fas fa-file-archive"></i></span>
-                                <span>Mimics, Muscles, and Me (v1)</span>
-                            </a>
-                        </p>
+    <div class="note">For a smile, the muscles that light up are exactly the ones anatomy predicts:
+      <b>Zygomaticus</b> (mouth corners up), <b>Orbicularis Oculi</b> (the Duchenne eye-squeeze), and
+      <b>Levator Labii Superioris</b>. The sEMG is an RMS envelope in microvolt-scale native units, resampled to 30 Hz.</div>
+  </div>
+</section>
 
-                        <section>
-                            <h2 class="title is-4">Dataset Overview</h2>
-                            <p>
-                                The dataset contains facial electromyography (sEMG) recordings and corresponding facial geometry data of the corresponding author (Tim Büchner) during various facial functional and emotional expressions.
-                                It is designed to facilitate research in facial expression synthesis and analysis, particularly in the context of occluded facial regions and underlying muscle activity.
-                                This dataset does not require any additional registration, unlike the main <strong>Mimics and Muscles</strong> dataset.
-                            </p>
-                            <p>
-                                The dataset includes:
-                            <ul>
-                                <li>Synchronized Facial sEMG recordings</li>
-                                <li>Synchronized Frontal 2D video recordings</li>
-                                <li>Labels for various facial expressions (instructed and not annotated)</li>
-                                <li><i>3D facial geometry data is available upon request for academic research</i></li>
-                            </ul>
-                            </p>
-                        </section>
+<section id="paradigms">
+  <div class="wrap">
+    <h2><span class="n">03</span> &nbsp;Two task paradigms</h2>
+    <p class="sec-lede">Two blocks, each recorded once with electrodes (<code>S</code>) and once without (<code>N</code>).
+      The last letter of the session label tells you which.</p>
 
-                        <section>
-                            <h2 class="title is-4">Citing "Mimics, Muscles, and Me"</h2>
-                            <p>
-                                This dataset is provided under the CC BY-NC 4.0 license, which requires you to give appropriate credit.
-                                In the spirit of academic collaboration, if you use this dataset in your research or publications, we request that you cite our <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Buchner_Electromyography-Informed_Facial_Expression_Reconstruction_for_Physiological-Based_Synthesis_and_Analysis_CVPR_2025_paper.pdf">paper</a>.
-                            </p>
-                        </section>
+    <div class="gallery">
+      <figure>
+        <img src="./static/images/mmm/emotions_grid.jpg" alt="six emotions" width="300">
+        <figcaption><b>Emotion</b> — six basic emotions, ~6 s imitations</figcaption>
+      </figure>
+      <figure>
+        <img src="./static/images/mmm/schaede_grid.jpg" alt="schaede movements" width="520">
+        <figcaption><b>Schaede</b> — eleven standardized movements, ~22 s each</figcaption>
+      </figure>
+    </div>
 
-                        <section>
-                            <h2 class="title is-4">License</h2>
-                            <p>
-                                The data sample is provided under the <strong>Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</strong> license.<br>
-                                You are free to share and adapt the dataset for any purpose, <strong>excluding commercial use</strong>, as long as you provide appropriate credit.
-                            </p>
-                            <details class="box">
-                                <summary class="has-text-weight-semibold">Full License Text (CC BY-NC 4.0)</summary>
-                                <pre style="white-space: pre-wrap; background: #f5f5f5; border-radius: 6px; padding: 1em;">
-Dataset License - Mimics, Muscles, and Me (MMM)
+    <table class="tbl" style="margin-top:28px">
+      <thead><tr><th>Session</th><th class="num">Clips</th><th class="num">with sEMG</th><th class="num">emotion</th><th class="num">schaede</th></tr></thead>
+      <tbody>
+        <tr><td><code>99_1N</code></td><td class="num">13</td><td class="num">0</td><td class="num">1</td><td class="num">12</td></tr>
+        <tr><td><code>99_1S</code></td><td class="num">12</td><td class="num">12</td><td class="num">1</td><td class="num">11</td></tr>
+        <tr><td><code>99_2N</code></td><td class="num">36</td><td class="num">0</td><td class="num">24</td><td class="num">12</td></tr>
+        <tr><td><code>99_2S</code></td><td class="num">34</td><td class="num">34</td><td class="num">23</td><td class="num">11</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-Attribution-NonCommercial 4.0 International
+<section id="structure">
+  <div class="wrap">
+    <h2><span class="n">04</span> &nbsp;What's in the box</h2>
+    <p class="sec-lede">Iterate over <code>MMM.csv</code> — it is the authoritative inventory. The directory tree
+      also holds files no row references.</p>
 
-Please read carefully the following terms and conditions and any accompanying documentation before you download and/or use the "Mimics, Muscles, and Me" dataset, and software (the "Dataset").
-By downloading and/or using the Dataset, you acknowledge that you have read these terms and conditions, understand them, and agree to be bound by them.
-If you do not agree with these terms and conditions, you must not download and/or use the Dataset.
+    <table class="tbl">
+      <thead><tr><th>Directory</th><th class="num">Files</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td><code>emg/</code></td><td class="num">46</td><td>Per-clip sEMG CSV, one row per video frame, 22 channels</td></tr>
+        <tr><td><code>video/</code></td><td class="num">95</td><td>Frontal video, cut to the synced window</td></tr>
+        <tr><td><code>video_no-cut/</code></td><td class="num">96</td><td>Same clips before the sync cut (lead-in/out intact)</td></tr>
+        <tr><td><code>video_noelec/</code></td><td class="num">46</td><td>Electrode-removed version of <code>video/</code> (MC-CycleGAN)</td></tr>
+        <tr><td><code>video_noelec_params/</code></td><td class="num">322</td><td>3DMM params fitted to <code>video_noelec/</code>, one folder per method</td></tr>
+        <tr><td><code>MMM.csv</code></td><td class="num">—</td><td>Authoritative clip index</td></tr>
+        <tr><td><code>MMM_3DMM.csv</code></td><td class="num">—</td><td>Index restricted to the 46 clips with 3DMM params</td></tr>
+      </tbody>
+    </table>
 
-Ownership
-The Dataset has been developed at the Computer Vision Group Jena at the Friedrich Schiller University Jena (hereinafter "CVG") in joint cooperation with the Ear-Nose-Throat Department at the University Hospital Jena and is owned by and proprietary material of the Computer Vision Group Jena.
+    <h3 style="margin-top:30px;font-size:18px">Seven 3D morphable-model methods</h3>
+    <p style="color:var(--muted);font-size:14px">Per-frame parameters for all 46 clean clips; each file has one row per video frame, aligned to video frame <em>i</em> and sEMG row <em>i</em>.</p>
+    <div class="methods">
+      <span class="meth">DECA</span><span class="meth">EMOCAv2</span><span class="meth">Deep3DFace</span>
+      <span class="meth">EIFER</span><span class="meth">SMIRK</span><span class="meth">FOCUS</span><span class="meth">MediaPipe</span>
+    </div>
+  </div>
+</section>
 
-License Grant
-The MMM dataset is under a Attribution-NonCommercial 4.0 International (https://creativecommons.org/licenses/by-nc/4.0/).
-Hence, CVG grants you the right to share and adapt the model for any purpose, excluding commercial use under following terms:
+<section id="start">
+  <div class="wrap">
+    <h2><span class="n">05</span> &nbsp;Quick start</h2>
+    <p class="sec-lede">Download the archive, unzip it, and the dataset lives under <code>MMM/</code>. By downloading you agree to the <a href="#cite">license terms</a> below (CC BY-NC 4.0).</p>
 
-- Attribution — You must give appropriate credit , provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-- NonCommercial — You may not use the material for commercial purposes .
-- No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+    <div class="note" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+      <div>
+        <strong>MMM.zip</strong> — the full dataset (~360&nbsp;MB): sEMG, video, electrode-removed video, and 3DMM fits from 7 methods.
+      </div>
+      <a class="btn btn-primary" style="flex:0 0 auto"
+         href="https://drive.google.com/file/d/193KEYNU6uSJhj_75_gMmJRKrmMyZA6P8/view?usp=sharing">⬇ Download MMM.zip</a>
+    </div>
+<pre><span class="c"># unzip if needed</span>
+unzip MMM.zip        <span class="c"># -&gt; MMM/</span>
 
-Disclaimer of Representations and Warranties
-You expressly acknowledge and agree that the Dataset results from basic research, is provided “AS IS”, may contain errors, and that any use of the Dataset is at your sole risk.
-CVG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE DATASET, NEITHER EXPRESS NOR IMPLIED, AND THE ABSENCE OF ANY LEGAL OR ACTUAL DEFECTS, WHETHER DISCOVERABLE OR NOT.
-Specifically, and not to limit the foregoing, CVG makes no representations or warranties
-(i) regarding the merchantability or fitness for a particular purpose of the Dataset,
-(ii) that the use of the Dataset will not infringe any patents, copyrights or other intellectual property rights of a third party, and
-(iii) that the use of the Dataset will not cause any damage of any kind to you or a third party.
+<span class="c"># in Python</span>
+<span class="c"># read pid as a string — it is zero-padded and pandas silently converts it</span>
+import pandas as pd
+df = pd.read_csv("MMM/MMM.csv", dtype={"pid": str})
 
-Limitation of Liability
-Under no circumstances shall CVG be liable for any incidental, special, indirect or consequential damages arising out of or relating to this license, including but not limited to, any lost profits, business interruption, loss of programs or other data, or all other commercial damages or losses, even if advised of the possibility thereof.
+paired = df[df.emg.notna()]          <span class="c"># 46 clips: EMG + video, frame-aligned</span>
+clean  = df[df.type == "normal"]     <span class="c"># 49 electrode-free reference clips</span>
+uncut  = df["video_no-cut"]          <span class="c"># untrimmed variants (EMG does not apply)</span>
 
-No Maintenance Services
-You understand and agree that CVG is under no obligation to provide either maintenance services, update services, notices of latent defects, or corrections of defects with regard to the Dataset.
-CVG nevertheless reserves the right to update, modify, or discontinue the Dataset at any time.
+<span class="c"># load one clip's sEMG — row i == video frame i</span>
+emg = pd.read_csv("MMM/" + paired.iloc[0]["emg"])   <span class="c"># 22 columns, 30 Hz</span></pre>
+  </div>
+</section>
 
-Publication with MMM and Attribution
-This dataset is provided under the CC BY-NC 4.0 license, which requires you to give appropriate credit.
-In the spirit of academic collaboration, if you use this dataset in your research or publications, we request that you cite our paper:
+<section id="cite">
+  <div class="wrap">
+    <h2><span class="n">06</span> &nbsp;Citation &amp; license</h2>
+    <p class="sec-lede">Use requires citing the three papers below. The MC-CycleGAN paper covers the
+      electrode-removed videos that every 3DMM parameter set is fitted to.</p>
 
-@InProceedings{Buchner_2025_CVPR,
-    author    = {B"uchner, Tim and Anders, Christoph and Guntinas-Lichius, Orlando and Denzler, Joachim},
-    title     = {Electromyography-Informed Facial Expression Reconstruction for Physiological-Based Synthesis and Analysis},
-    booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},
-    month     = {June},
-    year      = {2025},
-    pages     = {215-227}
-}
+    <details class="cite"><summary>EIFER <small>— CVPR 2025</small></summary>
+<pre>@inproceedings{buechner2025electromyography,
+ doi = {10.1109/CVPR52734.2025.00029},
+ year = {2025},
+ booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+ title = {Electromyography-Informed Facial Expression Reconstruction for Physiological-Based Synthesis and Analysis},
+ author = {Tim Büchner and Christoph Anders and Orlando Guntinas-Lichius and Joachim Denzler},
+}</pre></details>
 
-Copyright
-2025 Computer Vision Group Jena
-              </pre>
-                            </details>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <details class="cite"><summary>MC-CycleGAN <small>— ACIVS 2023</small></summary>
+<pre>@inproceedings{buechner2023improved,
+ doi = {10.1007/978-3-031-45382-3_22},
+ pages = {262-274},
+ year = {2023},
+ booktitle = {Advanced Concepts for Intelligent Vision Systems (Acivs)},
+ author = {Tim Büchner and Orlando Guntinas-Lichius and Joachim Denzler},
+ title = {Improved Obstructed Facial Feature Reconstruction for Emotion Recognition with Minimal Change CycleGANs},
+}</pre></details>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="content has-text-centered">
-                <a class="icon-link" href="./static/files/EIFER.pdf">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-                <a class="icon-link" href="https://timozen.github.io" class="external-link" disabled>
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-            <div class="columns is-centered">
-                <div class="column is-8">
-                    <div class="content">
-                        <p>
-                            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-                            The original design was borrowed from <a href="https://github.com/nerfies/nerfies.github.io">here</a>.
-                            If you want to use the design, please follow the original license and link.
-                        </p>
-                        <p>
-                            <a rel="license" href="impressum_privacy.html">Impressum und Datenschutz</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <details class="cite"><summary>sEMG recording protocol <small>— Scientific Reports 2023</small></summary>
+<pre>@article{guntinas2023high,
+  title={High-resolution surface electromyographic activities of facial muscles during the six basic emotional expressions in healthy adults: a prospective observational study},
+  author={Guntinas-Lichius, Orlando and Trentzsch, Vanessa and Mueller, Nadiya and Heinrich, Martin and Kuttenreich, Anna-Maria and Dobel, Christian and Volk, Gerd Fabian and Gra{\ss}me, Roland and Anders, Christoph},
+  journal={Scientific reports},
+  volume={13},
+  number={1},
+  pages={19214},
+  year={2023},
+  publisher={Nature Publishing Group UK London}
+}</pre></details>
 
-    <script src="./static/js/jquery-3.5.1.min.js"></script>
-    <script src="./static/js/fontawesome.all.min.js"></script>
-    <script src="./static/js/index.js"></script>
+    <div class="note">Provided under <strong>Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</strong> — free to share and adapt for any purpose <strong>excluding commercial use</strong>, with appropriate credit. See <a href="./static/files/MMM_LICENSE.md">LICENSE.md</a>.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong style="color:#fff">Mimics, Muscles, and Me (MMM)</strong> — single participant, fully consented for open release.<br>
+    Department of Otorhinolaryngology, Jena University Hospital / Friedrich Schiller University Jena.<br><br>
+    <a href="./static/files/MMM_DATASET_README.md">Full reference</a> · <a href="./static/files/MMM_LICENSE.md">License</a> · companion to <a href="https://github.com/cvjena">Mimics and Muscles (MaM)</a>
+    <br><br>
+    <a href="index.html">← EIFER project page</a> · <a href="impressum_privacy.html">Impressum und Datenschutz</a><br>
+    <span style="color:#64748b">Website licensed CC BY-SA 4.0; design adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.</span>
+  </div>
+</footer>
+
 </body>
-
 </html>
